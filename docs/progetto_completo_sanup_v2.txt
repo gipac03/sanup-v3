@@ -1,0 +1,1423 @@
+PROGETTO COMPLETO SANUP v2
+Documento madre per progettazione, sviluppo, contenuti, UX, UI, grafica, suoni, qualità e scaling banca domande
+
+Versione: Documento definitivo di visione prodotto
+Obiettivo: descrivere cosa deve diventare SanUp v2 in modo completo, impeccabile e operativo
+Destinatari: Claude / Fable 5 / Codex / sviluppatore / designer / content team
+
+
+======================================================================
+0. PRINCIPIO FONDAMENTALE
+======================================================================
+
+SanUp v2 non deve essere “un’app con quiz”.
+
+SanUp v2 deve diventare una piattaforma di preparazione intelligente, pulita,
+motivante e affidabile per studenti che preparano il test di ingresso di
+Professioni Sanitarie.
+
+Deve unire:
+
+- banca domande originale e controllata;
+- spiegazioni didattiche vere;
+- studio guidato;
+- simulazioni realistiche;
+- tracciamento errori;
+- progressi chiari;
+- interfaccia moderna;
+- esperienza fluida;
+- micro-interazioni curate;
+- suoni leggeri e non fastidiosi;
+- local-first;
+- zero caos;
+- zero contenuti copiati;
+- zero domande finte;
+- zero doppioni;
+- zero bug di navigazione.
+
+Regola madre:
+prima qualità reale, poi quantità.
+
+Se una funzione è bella ma confonde lo studente, si semplifica.
+Se una domanda aumenta il numero totale ma abbassa la qualità, si elimina.
+Se un QA dice “ok” ma il contenuto reale ha problemi, il QA è parte del problema.
+
+
+======================================================================
+1. IDENTITÀ DEL PRODOTTO
+======================================================================
+
+Nome:
+SanUp v2
+
+Settore:
+Preparazione test Professioni Sanitarie.
+
+Target:
+Studenti italiani che preparano test d’ingresso per corsi come:
+- Infermieristica;
+- Fisioterapia;
+- Tecniche di radiologia;
+- Ostetricia;
+- Logopedia;
+- Tecniche di laboratorio biomedico;
+- Dietistica;
+- Igiene dentale;
+- Terapia occupazionale;
+- altre Professioni Sanitarie.
+
+Promessa prodotto:
+“Ti alleni, capisci dove sbagli, migliori ogni giorno.”
+
+Tono del prodotto:
+- chiaro;
+- rassicurante;
+- motivante;
+- serio;
+- moderno;
+- non infantile;
+- non freddo;
+- non da gestionale scolastico vecchio.
+
+SanUp deve sembrare:
+- affidabile come uno strumento da studio serio;
+- piacevole come un’app moderna;
+- semplice come Duolingo/Quizlet;
+- utile come un tutor personale;
+- non pesante come un portale universitario.
+
+SanUp non deve sembrare:
+- un pannello debug;
+- un database grezzo;
+- una raccolta casuale di quiz;
+- una demo tecnica;
+- un’app piena di sezioni inutili.
+
+
+======================================================================
+2. OBIETTIVO FINALE DEL PROGETTO
+======================================================================
+
+Obiettivo finale:
+costruire una banca domande originale fino a 5000 domande e un’app completa
+per studiare, allenarsi e simulare il test.
+
+Target finale banca:
+5000 domande originali, suddivise per materia, capitolo, topic e difficoltà.
+
+Le domande devono essere:
+- originali;
+- aderenti al programma ufficiale MUR/bando;
+- didattiche;
+- non copiate;
+- non parafrasate da fonti protette;
+- non duplicate;
+- non near-duplicate;
+- non template;
+- non placeholder;
+- con spiegazione completa;
+- con wrongOptions specifiche.
+
+L’app deve permettere:
+- quiz per materia;
+- quiz misto;
+- simulazione esame;
+- salvataggio domande;
+- revisione errori;
+- statistiche;
+- percorso studio;
+- progressi;
+- backup locale;
+- esperienza fluida.
+
+
+======================================================================
+3. ARCHITETTURA GENERALE
+======================================================================
+
+SanUp v2 deve essere local-first.
+
+Principi tecnici:
+- nessun login obbligatorio;
+- nessun database remoto obbligatorio;
+- nessuna API AI runtime obbligatoria per usare l’app;
+- nessun paywall nella versione base;
+- dati salvati in locale;
+- backup/esportazione possibile;
+- app veloce;
+- hydration-safe;
+- navigazione stabile;
+- nessun crash se localStorage contiene dati vecchi.
+
+Stack previsto:
+- Next.js / React;
+- TypeScript;
+- localStorage o storage locale robusto;
+- struttura dati tipizzata;
+- test automatici;
+- QA report leggibile;
+- moduli separati per banca domande, quiz engine, progressi, errori, salvate, impostazioni, qualità contenuti.
+
+L’utente studente non deve vedere:
+- import tecnico;
+- QA/debug;
+- archivio grezzo;
+- database completo;
+- strumenti admin;
+- report interni;
+- chiavi localStorage;
+- dettagli tecnici.
+
+
+======================================================================
+4. STRUTTURA UI PRINCIPALE
+======================================================================
+
+Navigazione principale visibile:
+
+1. Home
+2. Allenati
+3. Errori
+4. Salvate
+5. Progressi
+6. Impostazioni
+
+Ordine consigliato:
+Home | Allenati | Errori | Salvate | Progressi | Impostazioni
+
+Su mobile:
+barra inferiore con icone semplici.
+
+Su desktop:
+sidebar o top navigation pulita.
+
+Sezioni tecniche nascoste:
+- QA / Debug;
+- Import;
+- Archivio;
+- Full Review;
+- Data Health;
+- Admin;
+- Raw Question Bank.
+
+Queste sezioni possono esistere in sviluppo, ma non devono essere parte
+dell’esperienza studente.
+
+
+======================================================================
+5. HOME
+======================================================================
+
+Obiettivo Home:
+far capire subito allo studente cosa fare oggi.
+
+La Home deve mostrare:
+- saluto leggero;
+- streak o continuità studio, se presente;
+- accuratezza totale;
+- sessioni completate;
+- errori da ripassare;
+- materia più debole;
+- pulsante principale “Inizia allenamento”;
+- pulsante secondario “Ripassa errori”;
+- eventuale card “Continua da dove eri rimasto”.
+
+La Home non deve:
+- essere piena di tabelle;
+- mostrare l’intera banca domande;
+- mostrare debug;
+- mostrare troppi numeri;
+- confondere Home con Materie.
+
+Esempio layout Home:
+
+Titolo:
+“Bentornato 👋”
+
+Sottotitolo:
+“Allenati oggi su ciò che ti fa perdere più punti.”
+
+Card principali:
+- Accuratezza: 65%
+- Errori aperti: 4
+- Sessioni completate: 7
+- Materia da rinforzare: Biologia
+
+CTA primaria:
+“Allenati ora”
+
+CTA secondaria:
+“Ripassa errori”
+
+
+======================================================================
+6. ALLENATI
+======================================================================
+
+Allenati è il cuore dell’app.
+
+Deve contenere tre modalità:
+
+1. Quiz per materia
+2. Quiz misto
+3. Simulazione esame
+
+Le tre modalità devono essere spiegate in modo semplice.
+
+Card 1 — Quiz per materia:
+“Allenati su una sola materia, scegliendo quante domande fare.”
+
+Card 2 — Quiz misto:
+“Domande da più materie, senza timer. Perfetto per allenarti con calma.”
+
+Card 3 — Simulazione esame:
+“Prova realistica con timer e risultato finale.”
+
+Design:
+- tre card grandi;
+- icone semplici;
+- badge “senza timer” / “con timer”;
+- pulsanti chiari.
+
+
+======================================================================
+7. QUIZ PER MATERIA
+======================================================================
+
+Flusso:
+
+1. Scegli materia
+2. Scegli numero domande
+3. Avvia quiz
+4. Rispondi
+5. Vedi feedback/spiegazione
+6. Risultato finale
+7. Salva errori e progressi
+
+Materie:
+- Biologia
+- Chimica
+- Ragionamento logico
+- Competenze di lettura e conoscenze acquisite negli studi
+- Fisica
+- Matematica
+
+Numero domande selezionabile:
+- 5
+- 10
+- 15
+- 20
+- tutte
+
+Requisiti:
+- se scelgo Biologia, devono uscire solo domande di Biologia;
+- niente contaminazione tra materie;
+- domanda con 5 opzioni A-E;
+- una sola risposta selezionabile;
+- pulsante conferma;
+- spiegazione chiara;
+- possibilità di salvare domanda;
+- errore salvato automaticamente se sbagliata.
+
+Feedback risposta:
+- corretta: verde, micro-animazione leggera, suono soft positivo;
+- sbagliata: rosso controllato, spiegazione utile, niente effetto punitivo.
+
+Importante:
+l’app non deve far sentire stupido lo studente. Deve fargli capire.
+
+
+======================================================================
+8. QUIZ MISTO
+======================================================================
+
+Quiz misto:
+allenamento trasversale senza timer.
+
+Requisiti:
+- usa distribuzione simile all’esame;
+- niente timer;
+- risultato a fine quiz;
+- feedback come quiz normale;
+- utile per allenamento quotidiano;
+- non deve rompere la simulazione esame.
+
+Differenza rispetto a simulazione:
+- quiz misto = allenamento rilassato;
+- simulazione = prova sotto tempo.
+
+Label:
+“Quiz misto”
+Sottotitolo:
+“Allenamento completo senza timer.”
+
+
+======================================================================
+9. SIMULAZIONE ESAME
+======================================================================
+
+Simulazione esame:
+modalità realistica.
+
+Requisiti:
+- timer visibile;
+- numero domande coerente con profilo esame configurato;
+- distribuzione materie coerente;
+- niente spiegazioni durante la prova;
+- risultato solo alla fine;
+- riepilogo per materia;
+- tempo impiegato;
+- accuratezza;
+- errori salvati;
+- sessione salvata in Progressi.
+
+UI durante simulazione:
+- domanda corrente;
+- opzioni;
+- timer;
+- indicatore progresso;
+- pulsante avanti;
+- nessun elemento distraente.
+
+Alla fine:
+- punteggio;
+- percentuale;
+- materia migliore;
+- materia peggiore;
+- domande sbagliate;
+- pulsante “Ripassa errori”;
+- pulsante “Nuova simulazione”.
+
+
+======================================================================
+10. ERRORI
+======================================================================
+
+Errori è la sezione per trasformare gli sbagli in miglioramento.
+
+Deve mostrare:
+- errori aperti;
+- errori risolti;
+- filtro per materia;
+- filtro per capitolo;
+- data ultimo errore;
+- numero volte sbagliata, se disponibile.
+
+Ogni errore deve mostrare:
+- domanda;
+- risposta scelta;
+- risposta corretta;
+- spiegazione completa;
+- whyCorrect;
+- wrongOptions;
+- testTrap;
+- memoryAnchor;
+- linkedReview;
+- pulsante “Segna come risolto”;
+- pulsante “Ripeti domanda”.
+
+Regola:
+non duplicare lo stesso errore infinite volte.
+Se lo studente sbaglia la stessa domanda, aggiorna contatore o timestamp.
+
+
+======================================================================
+11. SALVATE
+======================================================================
+
+Salvate:
+domande preferite o importanti.
+
+Requisiti:
+- lista unica;
+- no categorie complicate;
+- possibilità di rimuovere;
+- dettaglio completo;
+- spiegazione completa;
+- ripasso rapido.
+
+Ogni domanda salvata mostra:
+- subject;
+- chapter;
+- topic;
+- difficulty;
+- domanda;
+- opzioni;
+- risposta corretta;
+- spiegazione;
+- testTrap;
+- memoryAnchor;
+- linkedReview.
+
+UI:
+pulita, stile “flashcard avanzata”.
+
+
+======================================================================
+12. PROGRESSI
+======================================================================
+
+Progressi deve rispondere a:
+“Sto migliorando?”
+
+Metriche:
+- accuratezza totale;
+- sessioni completate;
+- media ultime sessioni;
+- materia migliore;
+- materia peggiore;
+- capitolo più debole;
+- errori aperti;
+- domande salvate;
+- andamento nel tempo.
+
+Grafici:
+- linea accuratezza nel tempo;
+- barre per materia;
+- card per capitolo debole;
+- mini riepilogo ultime sessioni.
+
+Regola:
+se esistono sessioni completate, non mostrare “n/d” per ultima sessione.
+Mostrare dati reali o fallback elegante.
+
+Esempio messaggio:
+“Hai completato 7 sessioni. La tua materia più forte è Chimica, quella da rinforzare è Biologia.”
+
+
+======================================================================
+13. IMPOSTAZIONI
+======================================================================
+
+Impostazioni deve essere semplice.
+
+Possibili opzioni:
+- mostra spiegazione subito / a fine quiz;
+- suoni on/off;
+- vibrazione on/off su mobile, se supportata;
+- modalità compatta;
+- tema chiaro/scuro;
+- reset progressi;
+- esporta backup;
+- importa backup;
+- info versione.
+
+Non inserire:
+- opzioni tecniche incomprensibili;
+- debug;
+- configurazioni da sviluppatore.
+
+
+======================================================================
+14. GRAFICA E DESIGN SYSTEM
+======================================================================
+
+Stile generale:
+- moderno;
+- pulito;
+- morbido;
+- sanitario ma non ospedaliero;
+- motivante;
+- professionale;
+- mobile-first.
+
+Mood:
+- “studio serio ma leggero”;
+- non gaming eccessivo;
+- non medicale freddo;
+- non scolastico vecchio.
+
+Palette consigliata:
+
+Colore primario:
+- blu sanitario moderno / teal profondo
+- esempio: #2563EB oppure #0F766E
+
+Colore secondario:
+- verde successo
+- esempio: #22C55E
+
+Errore:
+- rosso morbido
+- esempio: #EF4444
+
+Warning:
+- arancio
+- esempio: #F59E0B
+
+Background:
+- chiaro caldo
+- esempio: #F8FAFC
+
+Card:
+- bianco
+- border leggerissimo
+- shadow morbida
+
+Testo:
+- quasi nero
+- esempio: #0F172A
+
+Testo secondario:
+- grigio slate
+- esempio: #64748B
+
+Dark mode:
+- background #020617
+- card #0F172A
+- testo #F8FAFC
+- testo secondario #CBD5E1
+
+Font:
+- Inter, Geist, SF Pro o font moderno sans-serif.
+- leggibilità prima dell’estetica.
+
+Bordi:
+- radius 16-24px per card;
+- radius 999px per pill/badge.
+
+Shadow:
+- leggera;
+- mai pesante;
+- effetto premium soft.
+
+Icone:
+- lineari;
+- semplici;
+- coerenti;
+- niente emoji come unica icona nei componenti principali.
+
+Emoji:
+possono essere usate in modo leggero in messaggi motivazionali, non come struttura UI principale.
+
+Spacing:
+- abbondante;
+- aria tra sezioni;
+- mobile leggibile.
+
+Componenti principali:
+- Card;
+- Button primary;
+- Button secondary;
+- Badge;
+- Progress bar;
+- Quiz option;
+- Result card;
+- Stat card;
+- Bottom navigation;
+- Modal;
+- Toast.
+
+
+======================================================================
+15. DESIGN DOMANDE
+======================================================================
+
+Schermata domanda:
+
+Elementi:
+- materia/chapter/topic in alto, piccoli badge;
+- difficoltà;
+- numero domanda corrente;
+- testo domanda;
+- opzioni A-E;
+- pulsante conferma;
+- pulsante salva;
+- eventuale progress bar.
+
+Opzioni:
+- card cliccabili;
+- lettera A-E evidenziata;
+- hover desktop;
+- tap state mobile;
+- selezione chiara;
+- accessibilità tastiera.
+
+Dopo risposta:
+- opzione corretta verde;
+- opzione sbagliata selezionata rossa;
+- spiegazione sotto;
+- testTrap;
+- memoryAnchor;
+- linkedReview.
+
+Non mostrare troppe informazioni prima della risposta.
+Dopo la risposta, la spiegazione deve essere leggibile e non compressa.
+
+
+======================================================================
+16. MICRO-INTERAZIONI
+======================================================================
+
+Micro-interazioni:
+- transizione leggera tra domande;
+- pulsante che risponde al tap;
+- feedback corretto/sbagliato;
+- progress bar animata;
+- card risultato con animazione soft;
+- toast “Domanda salvata”;
+- toast “Errore aggiunto al ripasso”.
+
+Durata animazioni:
+- 150-250 ms;
+- mai lente;
+- mai fastidiose.
+
+Evitare:
+- confetti continui;
+- animazioni pesanti;
+- effetti da videogame;
+- shake aggressivo quando sbagli.
+
+
+======================================================================
+17. SUONI
+======================================================================
+
+I suoni devono essere opzionali e disattivabili.
+
+Impostazione:
+- suoni attivi di default solo se molto discreti;
+- meglio chiedere o lasciare toggle chiaro.
+
+Suoni consigliati:
+
+1. Tap/click leggero
+- durata: 30-80 ms
+- volume basso
+- morbido
+
+2. Risposta corretta
+- tono positivo breve
+- tipo “ding” soft
+- non arcade
+
+3. Risposta sbagliata
+- tono basso e morbido
+- non punitivo
+- niente buzzer aggressivo
+
+4. Quiz completato
+- piccolo suono di completamento
+- breve e soddisfacente
+
+5. Salvataggio domanda
+- micro-pop soft
+
+6. Timer quasi finito, simulazione
+- alert leggero solo negli ultimi minuti
+- non ansioso
+- disattivabile
+
+Regole suoni:
+- volume basso;
+- nessun suono lungo;
+- nessun suono ripetitivo;
+- nessun effetto che imbarazza in pubblico;
+- tutti i suoni devono rispettare prefers-reduced-motion / user settings se possibile.
+
+File consigliati:
+- /public/sounds/tap.mp3
+- /public/sounds/correct.mp3
+- /public/sounds/wrong.mp3
+- /public/sounds/complete.mp3
+- /public/sounds/save.mp3
+- /public/sounds/timer-soft.mp3
+
+Implementazione:
+- central sound manager;
+- preload leggero;
+- mute globale;
+- gestione errori se audio non disponibile.
+
+
+======================================================================
+18. ACCESSIBILITÀ
+======================================================================
+
+SanUp deve essere accessibile.
+
+Requisiti:
+- contrasto sufficiente;
+- font leggibile;
+- pulsanti grandi su mobile;
+- focus state visibile;
+- navigazione tastiera;
+- aria-label dove necessario;
+- non comunicare corretto/sbagliato solo con colore;
+- supporto prefers-reduced-motion;
+- suoni disattivabili;
+- niente testi minuscoli per info importanti.
+
+Opzioni quiz:
+- lettera A-E leggibile;
+- testo opzione chiaro;
+- selezione visibile anche senza colore.
+
+
+======================================================================
+19. STRUTTURA BANCA DOMANDE
+======================================================================
+
+Ogni domanda deve avere:
+
+id:
+identificativo unico stabile.
+
+subject:
+- biology
+- chemistry
+- logic
+- general_culture oppure reading_knowledge
+- physics
+- math
+
+chapter:
+capitolo coerente con programma.
+
+topic:
+argomento specifico.
+
+difficulty:
+- easy
+- medium
+- hard
+
+question:
+testo domanda.
+
+options:
+oggetto con A, B, C, D, E.
+
+correctOption:
+una lettera.
+
+explanation:
+testo completo mostrabile.
+
+explanationDetails:
+- whyCorrect;
+- wrongOptions;
+- testTrap;
+- memoryAnchor;
+- linkedReview.
+
+sourceType:
+original.
+
+originalityStatus:
+original.
+
+protectedSourceRisk:
+false.
+
+productionEligible:
+true.
+
+
+======================================================================
+20. COME DEVONO ESSERE LE DOMANDE
+======================================================================
+
+Una domanda buona:
+- valuta un concetto preciso;
+- è chiara;
+- non è ambigua;
+- non ha due risposte corrette;
+- non usa trabocchetti sporchi;
+- ha distrattori plausibili;
+- insegna qualcosa nella spiegazione.
+
+Una domanda cattiva:
+- è generica;
+- è copiata;
+- è un placeholder;
+- è troppo simile a un’altra;
+- ha opzioni finte;
+- ha spiegazione banale;
+- ha wrongOptions tutte uguali;
+- usa numeri progressivi;
+- chiede cose non presenti nel brano;
+- in logica non dà premesse;
+- in matematica/fisica non dà dati.
+
+Esempio buono — biologia:
+Domanda:
+Un batterio osservato al microscopio non mostra un nucleo delimitato da membrana. Dove si trova normalmente il suo DNA principale?
+
+Opzioni:
+A) Nel nucleo
+B) Nel nucleoide
+C) Nei mitocondri
+D) Nei cloroplasti
+E) Nel reticolo endoplasmatico
+
+correctOption:
+B
+
+whyCorrect:
+Il DNA principale dei procarioti si trova nel nucleoide, una regione del citoplasma non delimitata da membrana.
+
+wrongOptions:
+A) Il nucleo delimitato da membrana appartiene alle cellule eucariotiche, non ai batteri.
+C) I mitocondri sono organelli eucariotici; i batteri non li possiedono.
+D) I cloroplasti sono organelli fotosintetici di piante e alghe eucariotiche.
+E) Il reticolo endoplasmatico è un organello membranoso eucariotico, assente nei procarioti.
+
+testTrap:
+Confondere assenza di nucleo con assenza di DNA.
+
+memoryAnchor:
+Procariote = DNA nel nucleoide.
+
+linkedReview:
+Cellula procariotica.
+
+
+======================================================================
+21. REGOLE PER WRONGOPTIONS
+======================================================================
+
+Le wrongOptions sono fondamentali.
+
+Ogni opzione sbagliata deve spiegare perché quella specifica opzione è sbagliata.
+
+Non basta:
+“Le altre risposte sono errate.”
+
+Non basta:
+“Non è il caso richiesto.”
+
+Non basta:
+“È fuori contesto.”
+
+Deve dire cosa c’è di sbagliato.
+
+Esempio matematica:
+Domanda:
+Il 30% di 80 è:
+
+A) 12
+B) 18
+C) 24
+D) 30
+E) 40
+
+correctOption:
+C
+
+wrongOptions:
+A) 12 corrisponde al 15% di 80, non al 30%.
+B) 18 è troppo basso: il 10% è 8, quindi il 30% è 24.
+D) 30 riprende la percentuale come numero, ma non calcola il valore su 80.
+E) 40 è la metà di 80, non il 30%.
+
+Questo è il livello richiesto.
+
+
+======================================================================
+22. REGOLE PER LOGICA
+======================================================================
+
+Ogni domanda di logica deve avere premesse vere.
+
+Vietato:
+“Problema di logica su quantificatori...”
+senza premesse.
+
+Valido:
+“In un corso, tutti gli studenti che hanno completato il tirocinio possono accedere alla prova pratica. Alcuni studenti hanno completato il tirocinio. Quale conclusione segue necessariamente?”
+
+Le opzioni devono essere vere possibilità logiche, non etichette:
+- Conclusione compatibile 17
+- Conclusione troppo forte 18
+sono vietate.
+
+Logica può includere:
+- sillogismi;
+- quantificatori;
+- negazioni;
+- condizioni necessarie/sufficienti;
+- insiemi;
+- proporzioni verbali;
+- sequenze numeriche;
+- comprensione di vincoli.
+
+
+======================================================================
+23. REGOLE PER LETTURA E CONOSCENZE
+======================================================================
+
+Ogni domanda di lettura deve avere un brano vero.
+
+Brano minimo:
+25 parole.
+
+Il brano deve essere originale.
+
+La domanda deve chiedere:
+- idea principale;
+- inferenza consentita;
+- dettaglio esplicito;
+- coerenza;
+- tono;
+- rapporto causa-effetto, se presente.
+
+Opzioni:
+devono essere frasi reali, non “Dettaglio corretto 6”.
+
+WrongOptions:
+devono spiegare:
+- quale parola assolutizza;
+- quale informazione aggiunge;
+- quale dettaglio contraddice il brano;
+- quale inferenza non è autorizzata.
+
+Esempio:
+Brano:
+“Quando un gruppo lavora sotto pressione, la comunicazione breve può essere utile solo se non elimina informazioni essenziali. Un messaggio rapido ma ambiguo rischia di far perdere tempo invece di risparmiarlo.”
+
+Domanda:
+Quale idea esprime meglio il brano?
+
+Opzioni:
+A) La comunicazione breve è sempre la scelta migliore
+B) Un messaggio rapido è utile se resta chiaro e completo nelle informazioni essenziali
+C) I gruppi sotto pressione devono evitare ogni comunicazione
+D) Un messaggio ambiguo fa sempre risparmiare tempo
+E) Le informazioni essenziali rallentano sempre il lavoro
+
+correctOption:
+B
+
+
+======================================================================
+24. REGOLE PER MATEMATICA E FISICA
+======================================================================
+
+Matematica e fisica devono avere dati concreti.
+
+Vietato:
+- “quale risultato si ottiene applicando il procedimento richiesto”;
+- “Risultato matematico A”;
+- dati mancanti;
+- opzioni non numeriche quando serve numero;
+- stesso problema duplicato.
+
+Ogni esercizio deve essere risolvibile.
+
+Matematica:
+- percentuali;
+- frazioni;
+- proporzioni;
+- probabilità;
+- media;
+- geometria;
+- equazioni semplici;
+- interpretazione dati.
+
+Fisica:
+- velocità;
+- accelerazione;
+- forza;
+- pressione;
+- densità;
+- lavoro;
+- potenza;
+- energia;
+- legge di Ohm;
+- unità di misura.
+
+Ogni wrongOption deve corrispondere a errore plausibile:
+- usare totale sbagliato;
+- invertire rapporto;
+- sommare invece di moltiplicare;
+- confondere unità;
+- usare formula sbagliata.
+
+
+======================================================================
+25. ORIGINALITÀ E BANDO MUR
+======================================================================
+
+Il bando MUR / programma ufficiale serve per decidere gli argomenti.
+
+Non serve per copiare domande.
+
+Regola:
+programma ufficiale = fonte per argomenti.
+Domande = create da zero.
+
+Se il bando dice “biologia cellulare”, creare domande originali su:
+- cellule procariotiche/eucariotiche;
+- organelli;
+- membrana;
+- metabolismo;
+- mitosi/meiosi;
+- genetica;
+senza copiare esempi protetti.
+
+Ogni anno:
+il programma deve essere verificato se il bando cambia.
+
+
+======================================================================
+26. DISTRIBUZIONE TARGET 5000
+======================================================================
+
+Distribuzione proposta:
+
+- Biologia: 1500
+- Chimica: 1100
+- Ragionamento logico: 900
+- Lettura e conoscenze: 600
+- Fisica: 450
+- Matematica: 450
+
+Totale:
+5000
+
+Distribuzione difficoltà:
+- easy: 35%
+- medium: 45%
+- hard: 20%
+
+Ogni materia deve coprire più capitoli.
+Non concentrare troppe domande nello stesso topic.
+
+
+======================================================================
+27. STRATEGIA DI SCALING
+======================================================================
+
+Non generare 5000 domande in un colpo.
+
+Fasi:
+
+Fase 0 — Qualità base
+- sistemare banca attuale;
+- QA Truthfulness Gate;
+- regression test;
+- nessun doppione noto.
+
+Fase 1 — 190 → 300
+- aggiungere 110 domande;
+- QA completo;
+- fermarsi.
+
+Fase 2 — 300 → 500
+- aggiungere 200 domande;
+- QA completo;
+- fermarsi.
+
+Fase 3 — 500 → 1000
+- aggiungere 500 domande;
+- QA completo;
+- fermarsi.
+
+Fase 4 — 1000 → 2000
+- aggiungere 1000 domande;
+- QA completo;
+- fermarsi.
+
+Fase 5 — 2000 → 3000
+- aggiungere 1000 domande.
+
+Fase 6 — 3000 → 4000
+- aggiungere 1000 domande.
+
+Fase 7 — 4000 → 5000
+- aggiungere 1000 domande.
+
+Ogni fase deve essere approvata.
+Se una fase fallisce, non si passa alla successiva.
+
+
+======================================================================
+28. QA REPORT
+======================================================================
+
+Il QA report deve essere leggibile.
+
+Deve mostrare:
+- totale domande;
+- distribution per materia;
+- difficulty distribution;
+- duplicate count;
+- near duplicate count;
+- placeholder count;
+- fake option count;
+- wrongOptions gate;
+- ultimate gate;
+- truthfulness gate;
+- test pass/fail;
+- sample manuale.
+
+Non basta “status ok”.
+Serve prova leggibile.
+
+Campioni manuali:
+almeno 5 per materia:
+- 5 biologia;
+- 5 chimica;
+- 5 logica;
+- 5 lettura;
+- 5 fisica;
+- 5 matematica.
+
+Ogni campione mostra:
+- id;
+- domanda;
+- opzioni;
+- corretta;
+- whyCorrect;
+- wrongOptions;
+- testTrap;
+- memoryAnchor;
+- linkedReview.
+
+
+======================================================================
+29. GRAFICA AVANZATA
+======================================================================
+
+SanUp deve essere visivamente curato.
+
+Stile:
+- card morbide;
+- layout arioso;
+- colori coerenti;
+- animazioni leggere;
+- font leggibile;
+- icone lineari;
+- stati chiari.
+
+Esempio card quiz:
+- background bianco;
+- border #E2E8F0;
+- radius 20px;
+- shadow leggera;
+- padding 20-24px;
+- badge materia in alto;
+- domanda grande;
+- opzioni come card separate.
+
+Colori risposta:
+- corretta: verde;
+- sbagliata: rosso morbido;
+- selezionata: bordo blu;
+- disabilitata: grigio chiaro.
+
+Dark mode:
+deve essere supportata o almeno prevista.
+Non deve rompere contrasto.
+
+
+======================================================================
+30. SUONI E FEEDBACK
+======================================================================
+
+SanUp può avere suoni, ma devono essere eleganti.
+
+Suoni:
+- tap;
+- correct;
+- wrong;
+- complete;
+- save;
+- timer soft.
+
+Tutti disattivabili.
+
+Volumi bassi.
+Durata breve.
+Niente suoni arcade aggressivi.
+
+Feedback visivo:
+- correct: micro glow verde;
+- wrong: evidenza rossa morbida;
+- saved: toast;
+- completed: card risultato con animazione soft.
+
+Se prefers-reduced-motion è attivo:
+ridurre animazioni.
+
+
+======================================================================
+31. MOTIVAZIONE E COPYWRITING
+======================================================================
+
+Il testo dell’app deve motivare senza essere cringe.
+
+Esempi buoni:
+- “Ottimo, concetto centrato.”
+- “Errore utile: questa domanda finisce nel ripasso.”
+- “Stai migliorando in Chimica.”
+- “Biologia è la materia da rinforzare oggi.”
+- “Ripassa gli errori: sono i punti più facili da recuperare.”
+
+Esempi da evitare:
+- “Sei un genio!”
+- “Risposta disastrosa”
+- “Fallito”
+- “Non sai nulla”
+- testi troppo lunghi;
+- tono troppo infantile.
+
+
+======================================================================
+32. SICUREZZA DATI E BACKUP
+======================================================================
+
+Dati locali:
+- progressi;
+- errori;
+- salvate;
+- impostazioni;
+- sessioni;
+- backup.
+
+Serve:
+- backup export;
+- import backup;
+- migrazione dati se schema cambia;
+- non rompere dati esistenti;
+- safe parsing localStorage.
+
+Se dati corrotti:
+- mostra fallback;
+- non crashare;
+- permetti reset.
+
+
+======================================================================
+33. PERFORMANCE
+======================================================================
+
+Con 5000 domande:
+- caricamento veloce;
+- filtri efficienti;
+- niente freeze;
+- niente rendering di tutte le domande insieme;
+- paginazione o lazy loading per liste grandi;
+- quiz engine efficiente;
+- dedup e QA non devono pesare sull’esperienza studente.
+
+QA può essere pesante in ambiente sviluppo/build, non durante quiz studente.
+
+
+======================================================================
+34. TEST TECNICI OBBLIGATORI
+======================================================================
+
+Comandi:
+npm test
+npm run lint
+npm run build
+npx tsc --noEmit
+git diff --check
+
+Da eseguire dopo ogni task importante.
+
+Test:
+- quiz per materia;
+- quiz misto;
+- simulazione;
+- salvate;
+- errori;
+- progressi;
+- localStorage;
+- import/export;
+- qualità domande;
+- duplicate detection;
+- QA truthfulness;
+- gate su pattern vietati.
+
+
+======================================================================
+35. COSA NON DEVE MAI SUCCEDERE
+======================================================================
+
+Mai:
+- scalare con QA non affidabile;
+- generare 5000 domande in blocco senza audit;
+- mostrare debug allo studente;
+- usare domande copiate;
+- accettare placeholder;
+- accettare opzioni finte;
+- accettare logica senza premesse;
+- accettare reading senza brano;
+- accettare matematica/fisica senza dati;
+- accettare doppioni;
+- accettare near-duplicates;
+- dichiarare “ok” se ci sono problemi reali;
+- rompere errori/salvate/progressi dopo aggiornamenti.
+
+
+======================================================================
+36. DEFINIZIONE DI PRODOTTO FINITO
+======================================================================
+
+SanUp v2 può essere considerato pronto quando:
+
+App:
+- navigazione pulita;
+- UI moderna;
+- mobile ok;
+- quiz funzionanti;
+- simulazione funzionante;
+- errori funzionanti;
+- salvate funzionanti;
+- progressi funzionanti;
+- impostazioni funzionanti;
+- niente debug visibile.
+
+Contenuti:
+- 5000 domande originali;
+- distribuzione bilanciata;
+- spiegazioni complete;
+- wrongOptions specifiche;
+- zero duplicati;
+- zero near-duplicates;
+- zero placeholder;
+- zero domande fake.
+
+QA:
+- Question Quality Firewall ok;
+- Near-Duplicate Second Pass ok;
+- Ultimate Gate ok;
+- QA Truthfulness Gate ok;
+- regression test ok;
+- build ok;
+- TypeScript ok;
+- lint ok.
+
+Esperienza:
+- app piacevole;
+- veloce;
+- motivante;
+- chiara;
+- affidabile.
+
+
+======================================================================
+37. MESSAGGIO OPERATIVO PER CHI SVILUPPA
+======================================================================
+
+Non costruire SanUp come una semplice lista di quiz.
+
+Costruiscilo come un prodotto serio:
+- prima il percorso utente;
+- poi la qualità domanda;
+- poi la quantità;
+- poi polish grafico;
+- poi suoni e micro-interazioni.
+
+Ogni scelta deve aiutare lo studente a:
+1. allenarsi;
+2. capire;
+3. ricordare;
+4. migliorare;
+5. arrivare più preparato al test.
+
+Se qualcosa non serve a questo, va tolto.
