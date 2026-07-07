@@ -208,7 +208,7 @@ function Explanation({ question }: { question: Question }) {
   const d = question.explanationDetails;
   const wrongEntries = Object.entries(d.wrongOptions) as [OptionKey, string][];
   return (
-    <div className="mt-5 rounded-xl border border-border bg-background p-4">
+    <div className="mt-5 rounded-xl border border-primary/25 bg-primary/[0.06] p-4">
       <p className="text-sm font-semibold text-success">Perche' e' corretta</p>
       <p className="mt-1 text-sm">{d.whyCorrect}</p>
 

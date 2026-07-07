@@ -26,7 +26,7 @@ export function BottomNav() {
   return (
     <nav
       aria-label="Navigazione principale"
-      className="fixed bottom-0 inset-x-0 z-20 border-t border-border bg-card/95 backdrop-blur"
+      className="fixed bottom-0 inset-x-0 z-20 border-t border-primary/15 bg-[rgba(8,20,38,0.82)] backdrop-blur-lg"
     >
       <ul className="max-w-2xl mx-auto grid grid-cols-6">
         {NAV_ITEMS.map((item) => {

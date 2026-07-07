@@ -213,7 +213,9 @@ function ResultView({
         subtitle="Ecco com'e' andata."
       />
       <Card className="text-center">
-        <p className="text-5xl font-bold text-primary">{pct}%</p>
+        <p className="font-[family-name:var(--font-space)] text-5xl font-bold text-primary">
+          {pct}%
+        </p>
         <p className="mt-2 text-sm text-muted">
           {result.correctCount} risposte corrette su {result.total}
         </p>
