@@ -83,6 +83,19 @@ h3 {
   animation: auroraDrift2 20s ease-in-out infinite;
 }
 
+/* ---- Splash di caricamento ---- */
+@keyframes spinSlow {
+  to { transform: rotate(360deg); }
+}
+@keyframes splashProgress {
+  from { width: 0%; }
+  to { width: 100%; }
+}
+@keyframes splashPop {
+  0% { opacity: 0; transform: translateY(10px) scale(0.96); }
+  100% { opacity: 1; transform: none; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

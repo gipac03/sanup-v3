@@ -8,6 +8,7 @@ import {
 } from "@/lib/domain/question";
 import { SUBJECT_BY_ID } from "@/lib/domain/taxonomy";
 import { Badge, Button } from "@/components/ui";
+import { playClick, playCorrect, playWrong } from "@/lib/audio/sound";
 
 /**
  * Schermata di una singola domanda (sez. 15). Gestisce selezione, conferma e
@@ -50,10 +51,15 @@ export function QuestionView({
     const correct = selected === question.correctOption;
     setConfirmed(true);
     onAnswer(selected, correct);
+    // Feedback sonoro solo in modalita' pratica: in esame non si deve capire
+    // se la risposta e' giusta o sbagliata prima della fine.
+    if (correct) playCorrect();
+    else playWrong();
   }
 
   function submitExam() {
     if (selected === null) return;
+    playClick(); // in esame: solo click, nessun suono di esito
     onAnswer(selected, selected === question.correctOption);
     onNext();
   }
@@ -148,7 +154,10 @@ export function QuestionView({
               role="radio"
               aria-checked={selected === key}
               disabled={confirmed}
-              onClick={() => setSelected(key)}
+              onClick={() => {
+                setSelected(key);
+                playClick();
+              }}
               className={optionClasses(key)}
             >
               <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-current text-xs font-bold">
@@ -192,7 +201,13 @@ export function QuestionView({
             <>
               <Explanation question={question} />
               <div className="mt-5">
-                <Button onClick={onNext} className="w-full">
+                <Button
+                  onClick={() => {
+                    playClick();
+                    onNext();
+                  }}
+                  className="w-full"
+                >
                   {isLast ? "Vedi risultato" : "Prossima domanda"}
                 </Button>
               </div>

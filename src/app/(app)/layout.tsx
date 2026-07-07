@@ -1,4 +1,5 @@
 import { BottomNav } from "@/components/BottomNav";
+import AppExperience from "@/components/AppExperience";
 
 /**
  * Layout dell'area applicativa (dashboard, allenamenti, ecc.).
@@ -10,6 +11,7 @@ export default function AppLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <div className="min-h-full flex flex-col">
+      <AppExperience />
       {/* Sfondo ambientale: bagliori soft coerenti con la landing, così le
           pagine con poco contenuto non sembrano un vuoto nero. */}
       <div
