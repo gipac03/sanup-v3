@@ -9,7 +9,7 @@ import { usePathname } from "next/navigation";
  * desktop per semplicita' in questa fase.
  */
 const NAV_ITEMS: { href: string; label: string; icon: string }[] = [
-  { href: "/", label: "Home", icon: "home" },
+  { href: "/home", label: "Home", icon: "home" },
   { href: "/allenati", label: "Allenati", icon: "dumbbell" },
   { href: "/errori", label: "Errori", icon: "alert" },
   { href: "/salvate", label: "Salvate", icon: "bookmark" },
@@ -18,7 +18,6 @@ const NAV_ITEMS: { href: string; label: string; icon: string }[] = [
 ];
 
 function isActive(pathname: string, href: string): boolean {
-  if (href === "/") return pathname === "/";
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
