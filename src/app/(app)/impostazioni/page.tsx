@@ -33,13 +33,15 @@ export default function ImpostazioniPage() {
         </p>
         {!confirming ? (
           <div className="mt-4">
-            <Button variant="secondary" onClick={() => setConfirming(true)}>
+            <Button variant="danger" onClick={() => setConfirming(true)}>
               Reset progressi
             </Button>
           </div>
         ) : (
           <div className="mt-4 flex gap-3">
-            <Button onClick={resetAll}>Conferma reset</Button>
+            <Button variant="danger" onClick={resetAll}>
+              Conferma reset
+            </Button>
             <Button variant="secondary" onClick={() => setConfirming(false)}>
               Annulla
             </Button>
@@ -52,7 +54,7 @@ export default function ImpostazioniPage() {
 
       <Card className="mt-4">
         <p className="text-sm font-semibold">Versione</p>
-        <p className="mt-1 text-sm text-muted">SanUp v2 · anteprima (Task 1)</p>
+        <p className="mt-1 text-sm text-muted">SanUp v3 · 1.500 domande</p>
       </Card>
     </div>
   );

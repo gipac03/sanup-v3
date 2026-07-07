@@ -10,6 +10,15 @@ import { Button, Card, PageTitle } from "@/components/ui";
 
 const COUNT_OPTIONS: QuestionCount[] = [5, 10, 15, 20, "all"];
 
+const SUBJECT_ICON: Record<string, string> = {
+  biology: "🔬",
+  chemistry: "⚗️",
+  physics: "⚛️",
+  math: "📐",
+  logic: "🧩",
+  reading: "📖",
+};
+
 export default function QuizMateriaPage() {
   const [subject, setSubject] = useState<SubjectId | null>(null);
   const [count, setCount] = useState<QuestionCount>(5);
@@ -50,12 +59,13 @@ export default function QuizMateriaPage() {
               type="button"
               onClick={() => setSubject(s.id)}
               aria-pressed={subject === s.id}
-              className={`rounded-xl border p-3 text-left text-sm font-medium transition-colors ${
+              className={`flex items-center gap-2.5 rounded-xl border p-3 text-left text-sm font-medium transition-all ${
                 subject === s.id
-                  ? "border-primary bg-primary/5 text-primary"
-                  : "border-border bg-card hover:bg-border/30"
+                  ? "border-primary bg-primary/10 text-primary shadow-[0_0_24px_rgba(22,199,195,0.15)]"
+                  : "border-border bg-white/[0.02] hover:border-primary/40 hover:bg-primary/[0.04]"
               }`}
             >
+              <span className="text-lg leading-none">{SUBJECT_ICON[s.id]}</span>
               {s.shortLabel}
             </button>
           ))}

@@ -78,6 +78,8 @@ const buttonTones: Record<string, string> = {
     "bg-gradient-to-r from-primary to-[#2fa8e8] text-primary-fg shadow-[0_6px_28px_rgba(22,199,195,0.35)] hover:shadow-[0_10px_40px_rgba(22,199,195,0.5)] hover:-translate-y-0.5",
   secondary:
     "border border-primary/40 bg-primary/5 text-[#dff3f6] backdrop-blur hover:bg-primary/10 hover:-translate-y-0.5",
+  danger:
+    "border border-danger/45 bg-danger/12 text-danger hover:bg-danger/20 hover:-translate-y-0.5",
 };
 
 export function ButtonLink({
@@ -88,7 +90,7 @@ export function ButtonLink({
 }: {
   href: string;
   children: ReactNode;
-  variant?: "primary" | "secondary";
+  variant?: "primary" | "secondary" | "danger";
   className?: string;
 }) {
   return (
@@ -109,7 +111,7 @@ export function Button({
 }: {
   children: ReactNode;
   onClick?: () => void;
-  variant?: "primary" | "secondary";
+  variant?: "primary" | "secondary" | "danger";
   disabled?: boolean;
   type?: "button" | "submit";
   className?: string;
@@ -131,14 +133,35 @@ export function Button({
 export function EmptyState({
   title,
   description,
+  icon,
 }: {
   title: string;
   description: string;
+  icon?: ReactNode;
 }) {
   return (
-    <Card className="text-center">
-      <p className="font-semibold">{title}</p>
-      <p className="mt-1 text-sm text-muted">{description}</p>
-    </Card>
+    <div className="flex min-h-[52vh] flex-col items-center justify-center px-6 text-center">
+      <div className="mb-5 flex h-16 w-16 items-center justify-center rounded-2xl border border-primary/25 bg-primary/10 text-primary shadow-[0_0_44px_rgba(22,199,195,0.18)]">
+        {icon ?? (
+          <svg
+            width="26"
+            height="26"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.8"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden
+          >
+            <path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1" />
+          </svg>
+        )}
+      </div>
+      <p className="font-[family-name:var(--font-space)] text-lg font-semibold">
+        {title}
+      </p>
+      <p className="mt-2 max-w-sm text-sm text-muted">{description}</p>
+    </div>
   );
 }
