@@ -13,6 +13,15 @@ const eslintConfig = defineConfig([
     "build/**",
     "next-env.d.ts",
   ]),
+  {
+    rules: {
+      // Testo italiano con apostrofi nei nodi JSX: scelta stilistica, non un bug.
+      "react/no-unescaped-entities": "off",
+      // Leggere da localStorage dopo il mount richiede setState in effect: e' il
+      // pattern corretto per evitare mismatch di hydration in un'app local-first.
+      "react-hooks/set-state-in-effect": "off",
+    },
+  },
 ]);
 
 export default eslintConfig;

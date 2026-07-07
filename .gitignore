@@ -39,3 +39,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local database (rigenerabile con: npm run db:build)
+/local.db
+/local.db-*
+
