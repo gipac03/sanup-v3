@@ -17,6 +17,17 @@ export const metadata: Metadata = {
   title: "SanUp - Preparazione test Professioni Sanitarie",
   description:
     "Allenati, capisci dove sbagli e migliora ogni giorno per il test di ammissione alle Professioni Sanitarie.",
+  manifest: "/site.webmanifest",
+  themeColor: "#16c7c3",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "SanUp",
+  },
+  icons: {
+    icon: "/logo.svg",
+    apple: "/logo.svg",
+  },
 };
 
 export default function RootLayout({

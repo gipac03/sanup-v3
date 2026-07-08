@@ -7,24 +7,76 @@ import { SUBJECTS, SUBJECT_BY_ID } from "@/lib/domain/taxonomy";
 import { questionRepository } from "@/lib/data/repository";
 import { ButtonLink } from "@/components/ui";
 
-const SUBJECT_ICON: Record<string, string> = {
-  biology: "🔬",
-  chemistry: "⚗️",
-  physics: "⚛️",
-  math: "📐",
-  logic: "🧩",
-  reading: "📖",
-};
+function SubjectIcon({ id }: { id: string }) {
+  const attrs = {
+    width: 20,
+    height: 20,
+    viewBox: "0 0 20 20",
+    fill: "none" as const,
+    stroke: "currentColor",
+    strokeWidth: 1.6,
+    strokeLinecap: "round" as const,
+    strokeLinejoin: "round" as const,
+    "aria-hidden": true as const,
+  };
+  switch (id) {
+    case "biology":
+      return (
+        <svg {...attrs}>
+          <ellipse cx="10" cy="10" rx="7" ry="7" strokeWidth="1.5" />
+          <ellipse cx="10" cy="9" rx="3" ry="2.5" strokeWidth="1.2" />
+          <circle cx="10" cy="9" r="1" fill="currentColor" stroke="none" />
+        </svg>
+      );
+    case "chemistry":
+      return (
+        <svg {...attrs}>
+          <line x1="7.5" y1="2.5" x2="12.5" y2="2.5" />
+          <line x1="8.5" y1="2.5" x2="8.5" y2="7.5" />
+          <line x1="11.5" y1="2.5" x2="11.5" y2="7.5" />
+          <path d="M8.5 7.5 L4.5 16 Q4 18 6 18 H14 Q16 18 15.5 16 L11.5 7.5 Z" />
+          <circle cx="9" cy="13" r="1" fill="currentColor" stroke="none" />
+          <circle cx="12" cy="15.5" r="0.9" fill="currentColor" stroke="none" />
+        </svg>
+      );
+    case "physics":
+      return (
+        <svg {...attrs}>
+          <path d="M1 10 C3 5 5 5 7 10 S11 15 13 10 S17 5 19 10" />
+        </svg>
+      );
+    case "math":
+      return (
+        <svg {...attrs}>
+          <path d="M14 3 L6 3 L11 10 L6 17 L14 17" />
+        </svg>
+      );
+    case "logic":
+      return (
+        <svg {...attrs}>
+          <circle cx="8" cy="10" r="5.5" />
+          <circle cx="12" cy="10" r="5.5" />
+        </svg>
+      );
+    case "reading_knowledge":
+      return (
+        <svg {...attrs}>
+          <rect x="3" y="2" width="14" height="16" rx="2" />
+          <line x1="6" y1="7" x2="14" y2="7" strokeWidth="1.2" />
+          <line x1="6" y1="10" x2="14" y2="10" strokeWidth="1.2" />
+          <line x1="6" y1="13" x2="11" y2="13" strokeWidth="1.2" />
+        </svg>
+      );
+    default:
+      return null;
+  }
+}
 
-/** Animazione count-up: da 0 al valore, con ease-out. Rispetta reduce-motion. */
 function CountUp({ value, suffix = "" }: { value: number; suffix?: string }) {
   const [n, setN] = useState(0);
   useEffect(() => {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduce) {
-      setN(value);
-      return;
-    }
+    if (reduce) { setN(value); return; }
     let raf = 0;
     const start = performance.now();
     const dur = 950;
@@ -36,12 +88,7 @@ function CountUp({ value, suffix = "" }: { value: number; suffix?: string }) {
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
   }, [value]);
-  return (
-    <>
-      {n}
-      {suffix}
-    </>
-  );
+  return <>{n}{suffix}</>;
 }
 
 export default function HomePage() {
@@ -71,9 +118,8 @@ export default function HomePage() {
 
   return (
     <div className="-mt-6">
-      {/* ===== HERO cinematico ===== */}
+      {/* ===== HERO ===== */}
       <section className="relative overflow-hidden rounded-3xl border border-primary/15 px-6 pt-14 pb-10 sm:px-8">
-        {/* aurora animata dietro l'hero */}
         <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
           <div className="aurora-a absolute -top-24 -left-16 h-72 w-72 rounded-full bg-[radial-gradient(closest-side,rgba(22,199,195,0.35),transparent)] blur-2xl" />
           <div className="aurora-b absolute -top-10 right-0 h-80 w-80 rounded-full bg-[radial-gradient(closest-side,rgba(18,118,227,0.32),transparent)] blur-2xl" />
@@ -151,10 +197,7 @@ export default function HomePage() {
       <section className="reveal mt-8" style={{ animationDelay: "0.44s" }}>
         <div className="mb-3 flex items-baseline justify-between">
           <h2 className="text-lg font-semibold">Le tue materie</h2>
-          <Link
-            href="/allenati/materia"
-            className="text-sm font-medium text-primary"
-          >
+          <Link href="/allenati/materia" className="text-sm font-medium text-primary">
             Allenati →
           </Link>
         </div>
@@ -165,7 +208,9 @@ export default function HomePage() {
               href="/allenati/materia"
               className="group glass rounded-2xl border border-border p-4 transition-all hover:border-primary/40 hover:shadow-[0_0_30px_rgba(22,199,195,0.12)]"
             >
-              <div className="text-2xl leading-none">{SUBJECT_ICON[s.id]}</div>
+              <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-border/60 bg-white/5 text-primary">
+                <SubjectIcon id={s.id} />
+              </div>
               <div className="mt-3 font-[family-name:var(--font-space)] text-sm font-semibold uppercase tracking-wide text-muted">
                 {s.shortLabel}
               </div>
@@ -224,9 +269,7 @@ function StatTile({
 }) {
   return (
     <div className="glass rounded-2xl border border-border p-4 shadow-[0_20px_60px_rgba(0,0,0,0.35)]">
-      <p className="text-xs font-medium uppercase tracking-wide text-muted">
-        {label}
-      </p>
+      <p className="text-xs font-medium uppercase tracking-wide text-muted">{label}</p>
       <p
         className={`mt-1 font-[family-name:var(--font-space)] font-bold text-primary ${
           small ? "text-lg" : "text-2xl"

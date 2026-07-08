@@ -43,41 +43,27 @@ export default function AppExperience() {
         <div className="aurora-b absolute left-1/2 top-[48%] h-[34rem] w-[34rem] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(18,118,227,0.11),transparent)] blur-3xl" />
       </div>
 
-      {/* Emblem + wordmark */}
+      {/* Logo + wordmark */}
       <div
-        className="relative flex flex-col items-center gap-6"
+        className="relative flex flex-col items-center gap-5"
         style={{ animation: "splashPop 0.9s cubic-bezier(0.22,1,0.36,1) both" }}
       >
-        {/* Circle emblem */}
-        <div
-          className="flex h-20 w-20 items-center justify-center rounded-full"
+        {/* Logo SVG */}
+        <img
+          src="/logo.svg"
+          alt="SanUp"
+          width={80}
+          height={80}
+          className="rounded-[22px]"
           style={{
-            background:
-              "linear-gradient(135deg, rgba(22,199,195,0.12) 0%, rgba(18,118,227,0.12) 100%)",
-            boxShadow:
-              "0 0 0 1px rgba(22,199,195,0.3), 0 0 56px rgba(22,199,195,0.15)",
+            boxShadow: "0 0 0 1px rgba(22,199,195,0.25), 0 0 48px rgba(22,199,195,0.18)",
             animation: "splashGlow 2.6s ease-in-out infinite alternate",
           }}
-        >
-          <span
-            style={{
-              fontFamily: "var(--font-space, sans-serif)",
-              fontSize: "2rem",
-              fontWeight: 800,
-              lineHeight: 1,
-              background: "linear-gradient(135deg, #16c7c3 0%, #1276e3 100%)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-            }}
-          >
-            S
-          </span>
-        </div>
+        />
 
-        {/* Text */}
-        <div className="flex flex-col items-center gap-2">
-          <div
+        {/* Wordmark */}
+        <div className="flex flex-col items-center gap-1.5">
+          <span
             style={{
               fontFamily: "var(--font-space, sans-serif)",
               fontSize: "2.75rem",
@@ -97,7 +83,7 @@ export default function AppExperience() {
             >
               Up
             </span>
-          </div>
+          </span>
           <p
             style={{
               fontSize: "0.6rem",
