@@ -16,7 +16,7 @@ export interface SoundSettings {
 }
 
 const KEY = "sanup:sound";
-const DEFAULTS: SoundSettings = { sfx: true, music: true };
+const DEFAULTS: SoundSettings = { sfx: true, music: false };
 
 let settings: SoundSettings = DEFAULTS;
 let loaded = false;

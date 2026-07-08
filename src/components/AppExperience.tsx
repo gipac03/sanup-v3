@@ -3,19 +3,12 @@
 import { useEffect, useRef, useState } from "react";
 import { getSoundSettings, startMusic, unlockAudio } from "@/lib/audio/sound";
 
-/**
- * Esperienza d'ingresso dell'app: splash animato + sblocco audio.
- *
- * Lo splash parte al montaggio del gruppo (app) (cioe' all'ingresso nell'app)
- * e si dissolve dopo ~2.2s. Al primo gesto dell'utente si sblocca il contesto
- * audio e, se abilitata nelle impostazioni, parte la musica soft.
- */
 export default function AppExperience() {
   const [phase, setPhase] = useState<"loading" | "fading" | "done">("loading");
   const started = useRef(false);
 
   useEffect(() => {
-    if (started.current) return; // guardia contro il doppio-invoke di Strict Mode
+    if (started.current) return;
     started.current = true;
 
     const onGesture = () => {
@@ -25,8 +18,8 @@ export default function AppExperience() {
     window.addEventListener("pointerdown", onGesture, { once: true });
     window.addEventListener("keydown", onGesture, { once: true });
 
-    const t1 = setTimeout(() => setPhase("fading"), 2200);
-    const t2 = setTimeout(() => setPhase("done"), 2950);
+    const t1 = setTimeout(() => setPhase("fading"), 2400);
+    const t2 = setTimeout(() => setPhase("done"), 3100);
     return () => {
       clearTimeout(t1);
       clearTimeout(t2);
@@ -44,49 +37,89 @@ export default function AppExperience() {
       }`}
       aria-hidden
     >
+      {/* Aurora */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="aurora-a absolute left-1/2 top-1/3 h-[26rem] w-[26rem] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(22,199,195,0.28),transparent)] blur-3xl" />
-        <div className="aurora-b absolute left-1/2 top-1/2 h-[26rem] w-[26rem] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(18,118,227,0.22),transparent)] blur-3xl" />
+        <div className="aurora-a absolute left-1/2 top-1/2 h-[42rem] w-[42rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(22,199,195,0.13),transparent)] blur-3xl" />
+        <div className="aurora-b absolute left-1/2 top-[48%] h-[34rem] w-[34rem] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(18,118,227,0.11),transparent)] blur-3xl" />
       </div>
 
-      {/* anello rotante */}
+      {/* Emblem + wordmark */}
       <div
-        className="relative mb-8 h-24 w-24"
-        style={{ animation: "splashPop 0.7s cubic-bezier(0.22,1,0.36,1) both" }}
+        className="relative flex flex-col items-center gap-6"
+        style={{ animation: "splashPop 0.9s cubic-bezier(0.22,1,0.36,1) both" }}
       >
+        {/* Circle emblem */}
         <div
-          className="absolute inset-0 rounded-full"
+          className="flex h-20 w-20 items-center justify-center rounded-full"
           style={{
             background:
-              "conic-gradient(from 0deg, transparent 0deg, rgba(22,199,195,0.15) 90deg, #16c7c3 220deg, #1276e3 320deg, transparent 360deg)",
-            WebkitMask:
-              "radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 3px))",
-            mask: "radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 3px))",
-            animation: "spinSlow 1.1s linear infinite",
+              "linear-gradient(135deg, rgba(22,199,195,0.12) 0%, rgba(18,118,227,0.12) 100%)",
+            boxShadow:
+              "0 0 0 1px rgba(22,199,195,0.3), 0 0 56px rgba(22,199,195,0.15)",
+            animation: "splashGlow 2.6s ease-in-out infinite alternate",
           }}
-        />
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="h-3 w-3 rounded-full bg-primary shadow-[0_0_20px_rgba(22,199,195,0.9)]" />
+        >
+          <span
+            style={{
+              fontFamily: "var(--font-space, sans-serif)",
+              fontSize: "2rem",
+              fontWeight: 800,
+              lineHeight: 1,
+              background: "linear-gradient(135deg, #16c7c3 0%, #1276e3 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+            }}
+          >
+            S
+          </span>
+        </div>
+
+        {/* Text */}
+        <div className="flex flex-col items-center gap-2">
+          <div
+            style={{
+              fontFamily: "var(--font-space, sans-serif)",
+              fontSize: "2.75rem",
+              fontWeight: 700,
+              letterSpacing: "-0.03em",
+              lineHeight: 1,
+            }}
+          >
+            San
+            <span
+              style={{
+                background: "linear-gradient(90deg, #16c7c3, #1276e3)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+              }}
+            >
+              Up
+            </span>
+          </div>
+          <p
+            style={{
+              fontSize: "0.6rem",
+              textTransform: "uppercase",
+              letterSpacing: "0.5em",
+              color: "rgba(143,176,199,0.45)",
+            }}
+          >
+            L&apos;ascesa
+          </p>
         </div>
       </div>
 
-      <div
-        className="font-[family-name:var(--font-space)] text-4xl font-bold tracking-wide"
-        style={{ animation: "splashPop 0.7s cubic-bezier(0.22,1,0.36,1) 0.1s both" }}
-      >
-        San<span className="text-primary">Up</span>
-      </div>
-      <div
-        className="mt-2 font-[family-name:var(--font-space)] text-[0.65rem] uppercase tracking-[0.45em] text-muted"
-        style={{ animation: "splashPop 0.7s cubic-bezier(0.22,1,0.36,1) 0.18s both" }}
-      >
-        L&apos;ascesa
-      </div>
-
-      <div className="mt-8 h-1 w-48 overflow-hidden rounded-full bg-white/10">
+      {/* Bottom progress line */}
+      <div className="absolute bottom-0 left-0 right-0 h-[2px] overflow-hidden bg-white/[0.04]">
         <div
-          className="h-full rounded-full bg-gradient-to-r from-primary to-[#1276e3] shadow-[0_0_14px_rgba(22,199,195,0.7)]"
-          style={{ animation: "splashProgress 2.2s ease-out forwards" }}
+          className="h-full"
+          style={{
+            background:
+              "linear-gradient(90deg, transparent 0%, #16c7c3 45%, #1276e3 75%, transparent 100%)",
+            animation: "splashProgress 2.4s ease-out forwards",
+          }}
         />
       </div>
     </div>
