@@ -32,6 +32,17 @@ export default function AscesaLanding() {
       rafCur = 0,
       rafPre = 0;
     const observers: IntersectionObserver[] = [];
+
+    // Failsafe: se Three.js va in errore prima di raggiungere la logica del
+    // preloader, lo nascondiamo comunque dopo 5 secondi.
+    const preloaderSafe = setTimeout(() => {
+      const el = document.getElementById("preloader");
+      if (el && el.style.display !== "none") {
+        el.style.transition = "opacity 0.6s";
+        el.style.opacity = "0";
+        setTimeout(() => { el.style.display = "none"; }, 650);
+      }
+    }, 5000);
     let renderer: THREE.WebGLRenderer | null = null;
     let composer: EffectComposer | null = null;
 
@@ -637,6 +648,7 @@ export default function AscesaLanding() {
 
     return () => {
       disposed = true;
+      clearTimeout(preloaderSafe);
       ac.abort();
       cancelAnimationFrame(rafAnim);
       cancelAnimationFrame(rafCur);
