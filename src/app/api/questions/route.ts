@@ -1,22 +1,12 @@
 import { NextResponse } from "next/server";
-import { libsqlQuestionRepository } from "@/lib/data/libsqlRepository";
+import { LocalQuestionRepository } from "@/lib/data/repository";
 
-// Le route che leggono dal database girano nel runtime Node.
-export const runtime = "nodejs";
+// Esportazione statica: le domande vengono dal bundle seed, nessun DB.
+export const dynamic = "force-static";
 
-/**
- * Restituisce l'intera banca domande dal database.
- * Il client la richiede una sola volta e ne deriva filtri e conteggi in locale.
- */
+const repo = new LocalQuestionRepository();
+
 export async function GET() {
-  try {
-    const questions = await libsqlQuestionRepository.getAll();
-    return NextResponse.json({ questions });
-  } catch (err) {
-    console.error("GET /api/questions fallita:", err);
-    return NextResponse.json(
-      { error: "Impossibile leggere la banca domande" },
-      { status: 500 },
-    );
-  }
+  const questions = await repo.getAll();
+  return NextResponse.json({ questions });
 }
