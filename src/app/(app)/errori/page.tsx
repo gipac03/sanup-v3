@@ -10,11 +10,13 @@ import {
   type ErrorEntry,
 } from "@/lib/storage/progressStore";
 import { Badge, Button, Card, EmptyState, PageTitle } from "@/components/ui";
+import { QuizRunner } from "@/components/QuizRunner";
 
 export default function ErroriPage() {
   const [errors, setErrors] = useState<ErrorEntry[]>([]);
   const [byId, setById] = useState<Record<string, Question>>({});
   const [ready, setReady] = useState(false);
+  const [ripasso, setRipasso] = useState(false);
 
   useEffect(() => {
     void (async () => {
@@ -34,6 +36,36 @@ export default function ErroriPage() {
   const open = errors.filter((e) => !e.resolved);
   const resolved = errors.filter((e) => e.resolved);
 
+  // ---- Modalità ripasso ----
+  if (ripasso) {
+    const ripassoQuestions = open
+      .map((e) => byId[e.questionId])
+      .filter(Boolean) as Question[];
+
+    return (
+      <div>
+        <button
+          type="button"
+          onClick={() => setRipasso(false)}
+          className="mb-4 flex items-center gap-1.5 text-sm font-medium text-muted hover:text-foreground"
+        >
+          <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+            <path d="M12 4 L6 10 L12 16" />
+          </svg>
+          Torna agli errori
+        </button>
+        <QuizRunner
+          questions={ripassoQuestions}
+          mode="practice"
+          sessionSubject="mixed"
+          onRestart={() => setRipasso(false)}
+          restartLabel="Torna agli errori"
+        />
+      </div>
+    );
+  }
+
+  // ---- Lista errori ----
   if (ready && errors.length === 0) {
     return (
       <div>
@@ -52,9 +84,14 @@ export default function ErroriPage() {
 
       {open.length > 0 ? (
         <section>
-          <h2 className="mb-2 text-sm font-semibold text-muted">
-            Da ripassare ({open.length})
-          </h2>
+          <div className="mb-3 flex items-center justify-between">
+            <h2 className="text-sm font-semibold text-muted">
+              Da ripassare ({open.length})
+            </h2>
+            <Button onClick={() => setRipasso(true)}>
+              Ripassa {open.length} {open.length === 1 ? "errore" : "errori"} →
+            </Button>
+          </div>
           <div className="flex flex-col gap-3">
             {open.map((e) => (
               <ErrorCard
