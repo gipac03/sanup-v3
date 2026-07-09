@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { getSoundSettings, startMusic, unlockAudio } from "@/lib/audio/sound";
+import { unlockAudio } from "@/lib/audio/sound";
 
 export default function AppExperience() {
   const [phase, setPhase] = useState<"loading" | "fading" | "done">("loading");
@@ -11,10 +11,7 @@ export default function AppExperience() {
     if (started.current) return;
     started.current = true;
 
-    const onGesture = () => {
-      unlockAudio();
-      if (getSoundSettings().music) startMusic();
-    };
+    const onGesture = () => unlockAudio();
     window.addEventListener("pointerdown", onGesture, { once: true });
     window.addEventListener("keydown", onGesture, { once: true });
 
@@ -39,24 +36,25 @@ export default function AppExperience() {
     >
       {/* Aurora */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="aurora-a absolute left-1/2 top-1/2 h-[42rem] w-[42rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(22,199,195,0.13),transparent)] blur-3xl" />
-        <div className="aurora-b absolute left-1/2 top-[48%] h-[34rem] w-[34rem] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(18,118,227,0.11),transparent)] blur-3xl" />
+        <div className="aurora-a absolute left-1/2 top-1/2 h-[42rem] w-[42rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(22,199,195,0.10),transparent)] blur-3xl" />
+        <div className="aurora-b absolute left-1/2 top-[48%] h-[34rem] w-[34rem] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(18,118,227,0.09),transparent)] blur-3xl" />
       </div>
 
       {/* Logo + wordmark */}
       <div
-        className="relative flex flex-col items-center gap-5"
+        className="relative flex flex-col items-center gap-6"
         style={{ animation: "splashPop 0.9s cubic-bezier(0.22,1,0.36,1) both" }}
       >
-        {/* Logo SVG */}
+        {/* Logo image */}
         <img
-          src="/logo.svg"
+          src="/logo.jpg"
           alt="SanUp"
-          width={80}
-          height={80}
-          className="rounded-[22px]"
+          width={100}
+          height={100}
           style={{
-            boxShadow: "0 0 0 1px rgba(22,199,195,0.25), 0 0 48px rgba(22,199,195,0.18)",
+            borderRadius: "24px",
+            boxShadow:
+              "0 0 0 1px rgba(255,255,255,0.07), 0 8px 48px rgba(0,0,0,0.7), 0 0 60px rgba(22,199,195,0.14)",
             animation: "splashGlow 2.6s ease-in-out infinite alternate",
           }}
         />

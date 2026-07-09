@@ -13,15 +13,15 @@ import {
 export default function ImpostazioniPage() {
   const [confirming, setConfirming] = useState(false);
   const [done, setDone] = useState(false);
-  const [sound, setSound] = useState<SoundSettings>({ sfx: true, music: false });
+  const [sound, setSound] = useState<SoundSettings>({ sfx: true });
 
   useEffect(() => {
     setSound(getSoundSettings());
   }, []);
 
-  function toggleSound(key: keyof SoundSettings) {
+  function toggleSfx() {
     unlockAudio();
-    setSound(setSoundSettings({ [key]: !sound[key] }));
+    setSound(setSoundSettings({ sfx: !sound.sfx }));
   }
 
   function resetAll() {
@@ -40,21 +40,31 @@ export default function ImpostazioniPage() {
       <Card>
         <p className="text-sm font-semibold">Audio</p>
         <p className="mt-1 text-sm text-muted">
-          Suoni di feedback durante il quiz e musica soft di sottofondo.
+          Feedback sonori durante il quiz: click, risposta corretta e sbagliata.
         </p>
-        <div className="mt-4 divide-y divide-border/40">
-          <ToggleRow
-            label="Effetti sonori"
-            description="Click e feedback su risposte corrette / sbagliate"
-            on={sound.sfx}
-            onToggle={() => toggleSound("sfx")}
-          />
-          <ToggleRow
-            label="Musica di sottofondo"
-            description="Melodia ambient silenziosa durante la sessione"
-            on={sound.music}
-            onToggle={() => toggleSound("music")}
-          />
+        <div className="mt-4 flex items-center justify-between gap-4">
+          <div className="min-w-0">
+            <p className="text-sm font-medium leading-snug">Effetti sonori</p>
+            <p className="mt-0.5 text-xs text-muted leading-snug">
+              Suoni di feedback su risposte e navigazione
+            </p>
+          </div>
+          <button
+            type="button"
+            role="switch"
+            aria-checked={sound.sfx}
+            aria-label="Effetti sonori"
+            onClick={toggleSfx}
+            className={`relative h-6 w-11 shrink-0 rounded-full transition-colors duration-200 ${
+              sound.sfx ? "bg-primary/80" : "bg-white/10"
+            }`}
+          >
+            <span
+              className={`absolute top-0.5 h-5 w-5 rounded-full bg-white shadow transition-transform duration-200 ${
+                sound.sfx ? "translate-x-[22px]" : "translate-x-0.5"
+              }`}
+            />
+          </button>
         </div>
       </Card>
 
@@ -91,43 +101,6 @@ export default function ImpostazioniPage() {
         <p className="text-sm font-semibold">Versione</p>
         <p className="mt-1 text-sm text-muted">SanUp v3 · 1.500 domande</p>
       </Card>
-    </div>
-  );
-}
-
-function ToggleRow({
-  label,
-  description,
-  on,
-  onToggle,
-}: {
-  label: string;
-  description: string;
-  on: boolean;
-  onToggle: () => void;
-}) {
-  return (
-    <div className="flex items-center justify-between gap-4 py-3">
-      <div className="min-w-0">
-        <p className="text-sm font-medium leading-snug">{label}</p>
-        <p className="mt-0.5 text-xs text-muted leading-snug">{description}</p>
-      </div>
-      <button
-        type="button"
-        role="switch"
-        aria-checked={on}
-        aria-label={label}
-        onClick={onToggle}
-        className={`relative h-6 w-11 shrink-0 rounded-full transition-colors duration-200 ${
-          on ? "bg-primary/80" : "bg-white/10"
-        }`}
-      >
-        <span
-          className={`absolute top-0.5 h-5 w-5 rounded-full bg-white shadow transition-transform duration-200 ${
-            on ? "translate-x-[22px]" : "translate-x-0.5"
-          }`}
-        />
-      </button>
     </div>
   );
 }

@@ -25,8 +25,8 @@ export const metadata: Metadata = {
     title: "SanUp",
   },
   icons: {
-    icon: "/logo.svg",
-    apple: "/logo.svg",
+    icon: "/logo.jpg",
+    apple: "/logo.jpg",
   },
 };
 
